@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_app/views/sign_up_view.dart';
 
+import 'views/home_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -15,9 +17,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        fontFamily: "Gilroy",
         // colorScheme: ColorScheme.fromSeed(
         //   seedColor: Colors.deepPurple,
         // ),
+
         useMaterial3: true,
         textTheme: const TextTheme(
           titleLarge: TextStyle(
@@ -38,7 +42,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const SignUpView(),
+      home: const HomeView(),
     );
   }
 }
