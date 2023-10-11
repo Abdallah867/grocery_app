@@ -3,9 +3,11 @@ import 'package:grocery_app/widgets/custom_text.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String text;
+  final Function(String)? onChanged;
   const CustomTextFormField({
     super.key,
     required this.text,
+    this.onChanged,
   });
 
   @override
@@ -17,8 +19,16 @@ class CustomTextFormField extends StatelessWidget {
           text: text,
           theme: Theme.of(context).textTheme.titleSmall,
         ),
-        const TextField(
-          decoration: InputDecoration(
+        TextFormField(
+          validator: (value) {
+            if (value?.isEmpty ?? true) {
+              return "Field required";
+            } else {
+              return null;
+            }
+          },
+          onChanged: onChanged,
+          decoration: const InputDecoration(
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(
                 color: Color.fromRGBO(226, 226, 226, 0.988),
