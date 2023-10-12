@@ -11,11 +11,12 @@ class AuthCubit extends Cubit<AuthState> {
   String email = "";
   String password = "";
   String username = "";
+  GlobalKey<FormState> signupKey = GlobalKey();
+  GlobalKey<FormState> loginKey = GlobalKey();
+
   final client = Client()
       .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
       .setProject('651de5a0d4c1158c8b2f'); // Your project ID
-
-  GlobalKey<FormState> signupKey = GlobalKey();
 
   registerNewUser() async {
     emit(SignUpLoading());
@@ -31,13 +32,14 @@ class AuthCubit extends Cubit<AuthState> {
       );
       emit(SignUpSuccess());
     } on AppwriteException catch (e) {
-      print(e.toString());
-      emit(SignUpFailure());
+      emit(SignUpFailure(errMessage: e.toString()));
       // TODO
+    } catch (e) {
+      emit(SignUpFailure(errMessage: e.toString()));
     }
   }
 
-  loginUser(Account account) async {
+  loginUser() async {
     try {
       emit(SignInLoading());
       final account = Account(client);
@@ -46,7 +48,7 @@ class AuthCubit extends Cubit<AuthState> {
           await account.createEmailSession(email: email, password: password);
       emit(SignInSuccess());
     } on Exception catch (e) {
-      emit(SignInFailure());
+      emit(SignInFailure(errMessage: e.toString()));
       // TODO
     }
   }
