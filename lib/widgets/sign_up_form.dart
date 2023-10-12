@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grocery_app/views/home_view.dart';
 
 import '../constants.dart';
 import '../cubits/auth_cubit/auth_cubit.dart';
@@ -20,6 +21,9 @@ class SignUpForm extends StatelessWidget {
       listener: (context, state) {
         if (state is SignUpSuccess) {
           showSnackBar(context, "signed up successfully");
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomeView()),
+          );
         }
         if (state is SignUpFailure) {
           showSnackBar(context, state.errMessage);

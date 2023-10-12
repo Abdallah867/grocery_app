@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../constants.dart';
 import '../cubits/auth_cubit/auth_cubit.dart';
 import '../helper/show_snack_bar.dart';
+import '../views/home_view.dart';
 import 'custom_button.dart';
 import 'custom_text_field.dart';
 
@@ -20,6 +20,9 @@ class LoginForm extends StatelessWidget {
       listener: (context, state) {
         if (state is SignInSuccess) {
           showSnackBar(context, "Logged in successfully");
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomeView()),
+          );
         }
         if (state is SignInFailure) {
           showSnackBar(context, state.errMessage);

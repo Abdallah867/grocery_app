@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:grocery_app/widgets/dont_have_an_account.dart';
-import '../constants.dart';
 import '../cubits/auth_cubit/auth_cubit.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/login_form.dart';

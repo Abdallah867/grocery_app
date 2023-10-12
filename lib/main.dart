@@ -1,20 +1,8 @@
-import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
-import 'package:grocery_app/test.dart';
-import 'package:grocery_app/views/sign_up_view.dart';
-
-import 'views/home_screen.dart';
+import 'views/home_view.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  // Client client = Client();
-  // client = Client()
-  //     .setEndpoint("https://cloud.appwrite.io/v1")
-  //     .setProject("651de5a0d4c1158c8b2f");
-
-  // Account account = Account(client);
-
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -54,7 +42,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: SignUpView(),
+      home: const HomeView(),
     );
   }
 }

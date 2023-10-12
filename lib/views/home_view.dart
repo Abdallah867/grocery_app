@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:grocery_app/constants.dart';
+
+import '../widgets/product_card.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -33,6 +34,14 @@ class HomeView extends StatelessWidget {
             icon: Icon(Icons.person_outline),
             label: "Account",
           ),
+        ],
+      ),
+      body: Column(
+        children: [
+          SizedBox(
+            height: 100,
+          ),
+          ProductCard(),
         ],
       ),
     );

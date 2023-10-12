@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:grocery_app/widgets/have_an_account_widget.dart';
-
-import '../constants.dart';
 import '../cubits/auth_cubit/auth_cubit.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/logo_widget.dart';
 import '../widgets/sign_up_form.dart';
-import 'login_view.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({
