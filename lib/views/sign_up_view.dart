@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery_app/widgets/have_an_account_widget.dart';
+import 'package:grocery_app/widgets/auth/have_an_account_widget.dart';
 import '../cubits/auth_cubit/auth_cubit.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/logo_widget.dart';
-import '../widgets/sign_up_form.dart';
+import '../widgets/auth/sign_up_form.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({
@@ -22,9 +22,7 @@ class SignUpView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 80),
                 const LogoWidget(),
-                const SizedBox(height: 60),
                 CustomText(
                   text: "Sign up",
                   theme: Theme.of(context).textTheme.titleLarge,

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery_app/views/home_view.dart';
+import '../../constants.dart';
+import '../../cubits/auth_cubit/auth_cubit.dart';
+import '../../helper/show_snack_bar.dart';
+import '../../views/home_view.dart';
+import '../custom_button.dart';
+import '../custom_text_field.dart';
 
-import '../constants.dart';
-import '../cubits/auth_cubit/auth_cubit.dart';
-import '../helper/show_snack_bar.dart';
-import 'custom_button.dart';
-import 'custom_text_field.dart';
-
-class SignUpForm extends StatelessWidget {
-  const SignUpForm({
+class LoginForm extends StatelessWidget {
+  const LoginForm({
     super.key,
   });
 
@@ -19,51 +18,54 @@ class SignUpForm extends StatelessWidget {
 
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is SignUpSuccess) {
-          showSnackBar(context, "signed up successfully");
+        if (state is SignInSuccess) {
+          showSnackBar(context, "Logged in successfully");
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const HomeView()),
+            MaterialPageRoute(builder: (context) => HomeView()),
           );
         }
-        if (state is SignUpFailure) {
+        if (state is SignInFailure) {
           showSnackBar(context, state.errMessage);
         }
       },
       builder: (context, state) {
         return AbsorbPointer(
-          absorbing: state is SignUpLoading ? true : false,
+          absorbing: state is SignInLoading ? true : false,
           child: Form(
-            key: authCubit.signupKey,
+            key: authCubit.loginKey,
             child: Column(
               children: [
-                CustomTextFormField(
-                  onChanged: (username) {
-                    authCubit.username = username;
-                  },
-                  text: 'Username',
-                ),
                 const SizedBox(
-                  height: 25,
+                  height: 30,
                 ),
                 CustomTextFormField(
+                  text: 'Email',
                   onChanged: (email) {
                     authCubit.email = email;
                   },
-                  text: 'Email',
                 ),
                 const SizedBox(
                   height: 25,
                 ),
                 CustomTextFormField(
+                  text: 'Password',
                   onChanged: (password) {
                     authCubit.password = password;
                   },
-                  text: 'Password',
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text("Forgot Password ?"),
+                  ],
                 ),
                 const SizedBox(
                   height: 30,
                 ),
-                state is SignUpLoading
+                state is SignInLoading
                     ? const Padding(
                         padding: EdgeInsets.symmetric(vertical: 16.0),
                         child: CircularProgressIndicator(
@@ -72,13 +74,16 @@ class SignUpForm extends StatelessWidget {
                       )
                     : CustomButton(
                         onPressed: () async {
-                          if (authCubit.signupKey.currentState!.validate()) {
-                            await authCubit.registerNewUser();
+                          if (authCubit.loginKey.currentState!.validate()) {
+                            await authCubit.loginUser();
                           }
                         },
-                        text: "Sign up",
+                        text: "Login",
                         // onPressed: ,
                       ),
+                const SizedBox(
+                  height: 5,
+                ),
               ],
             ),
           ),

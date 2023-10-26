@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
-import '../views/login_view.dart';
-import 'custom_text.dart';
+import '../../constants.dart';
+import '../../views/login_view.dart';
+import '../custom_text.dart';
 
 class HaveAnAccountWidget extends StatelessWidget {
   const HaveAnAccountWidget({

@@ -8,8 +8,14 @@ class LogoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SvgPicture.asset("assets/images/logo.svg"),
+    return Column(
+      children: [
+        const SizedBox(height: 80),
+        Center(
+          child: SvgPicture.asset("assets/images/logo.svg"),
+        ),
+        const SizedBox(height: 60),
+      ],
     );
   }
 }

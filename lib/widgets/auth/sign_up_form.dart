@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../constants.dart';
-import '../cubits/auth_cubit/auth_cubit.dart';
-import '../helper/show_snack_bar.dart';
-import '../views/home_view.dart';
-import 'custom_button.dart';
-import 'custom_text_field.dart';
+import 'package:grocery_app/views/home_view.dart';
 
-class LoginForm extends StatelessWidget {
-  const LoginForm({
+import '../../constants.dart';
+import '../../cubits/auth_cubit/auth_cubit.dart';
+import '../../helper/show_snack_bar.dart';
+import '../custom_button.dart';
+import '../custom_text_field.dart';
+
+class SignUpForm extends StatelessWidget {
+  const SignUpForm({
     super.key,
   });
 
@@ -18,54 +19,51 @@ class LoginForm extends StatelessWidget {
 
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is SignInSuccess) {
-          showSnackBar(context, "Logged in successfully");
+        if (state is SignUpSuccess) {
+          showSnackBar(context, "signed up successfully");
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const HomeView()),
+            MaterialPageRoute(builder: (context) => HomeView()),
           );
         }
-        if (state is SignInFailure) {
+        if (state is SignUpFailure) {
           showSnackBar(context, state.errMessage);
         }
       },
       builder: (context, state) {
         return AbsorbPointer(
-          absorbing: state is SignInLoading ? true : false,
+          absorbing: state is SignUpLoading ? true : false,
           child: Form(
-            key: authCubit.loginKey,
+            key: authCubit.signupKey,
             child: Column(
               children: [
-                const SizedBox(
-                  height: 30,
-                ),
                 CustomTextFormField(
-                  text: 'Email',
-                  onChanged: (email) {
-                    authCubit.email = email;
+                  onChanged: (username) {
+                    authCubit.username = username;
                   },
+                  text: 'Username',
                 ),
                 const SizedBox(
                   height: 25,
                 ),
                 CustomTextFormField(
-                  text: 'Password',
+                  onChanged: (email) {
+                    authCubit.email = email;
+                  },
+                  text: 'Email',
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                CustomTextFormField(
                   onChanged: (password) {
                     authCubit.password = password;
                   },
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text("Forgot Password ?"),
-                  ],
+                  text: 'Password',
                 ),
                 const SizedBox(
                   height: 30,
                 ),
-                state is SignInLoading
+                state is SignUpLoading
                     ? const Padding(
                         padding: EdgeInsets.symmetric(vertical: 16.0),
                         child: CircularProgressIndicator(
@@ -74,16 +72,13 @@ class LoginForm extends StatelessWidget {
                       )
                     : CustomButton(
                         onPressed: () async {
-                          if (authCubit.loginKey.currentState!.validate()) {
-                            await authCubit.loginUser();
+                          if (authCubit.signupKey.currentState!.validate()) {
+                            await authCubit.registerNewUser();
                           }
                         },
-                        text: "Login",
+                        text: "Sign up",
                         // onPressed: ,
                       ),
-                const SizedBox(
-                  height: 5,
-                ),
               ],
             ),
           ),
