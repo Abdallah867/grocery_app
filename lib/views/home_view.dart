@@ -4,21 +4,20 @@ import 'package:grocery_app/constants.dart';
 import 'package:grocery_app/cubits/product_cubit/product_cubit.dart';
 import 'package:grocery_app/views/shop_view.dart';
 
-import '../widgets/product/exclusive_offer_widget.dart';
 import 'category_view.dart';
 
 class HomeView extends StatefulWidget {
-  HomeView({super.key});
-  List views = [
-    const ShopView(),
-    const CategoryView(),
-  ];
+  const HomeView({super.key});
 
   @override
   State<HomeView> createState() => _HomeViewState();
 }
 
 class _HomeViewState extends State<HomeView> {
+  List views = [
+    const ShopView(),
+    const CategoryView(),
+  ];
   int pageIndex = 0;
 
   @override
@@ -27,17 +26,16 @@ class _HomeViewState extends State<HomeView> {
       create: (context) => ProductCubit(),
       child: Scaffold(
         bottomNavigationBar: BottomNavigationBar(
+          onTap: (index) {
+            pageIndex = index;
+            setState(() {});
+          },
           currentIndex: pageIndex,
           selectedItemColor: kSecondaryColor,
           unselectedItemColor: Colors.black,
           items: [
-            BottomNavigationBarItem(
-              icon: GestureDetector(
-                  onTap: () {
-                    pageIndex = 0;
-                    setState(() {});
-                  },
-                  child: const Icon(Icons.storefront_sharp)),
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.storefront_sharp),
               label: "Store",
             ),
             BottomNavigationBarItem(
@@ -63,7 +61,7 @@ class _HomeViewState extends State<HomeView> {
             ),
           ],
         ),
-        body: widget.views[pageIndex],
+        body: views[pageIndex],
       ),
     );
   }
