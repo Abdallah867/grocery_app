@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grocery_app/cubits/check_user_if_exists/check_user_if_exists_cubit.dart';
+import 'package:grocery_app/views/sign_up_view.dart';
+import 'cubits/check_user_if_exists/check_user_if_exists_state.dart';
 import 'views/home_view.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
 }
 
@@ -42,7 +46,18 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: HomeView(),
+      home: BlocProvider(
+        create: (context) => CheckUserIfExistsCubit()..getUserIfExists(),
+        child: BlocBuilder<CheckUserIfExistsCubit, CheckUserIfExistsState>(
+          builder: (context, state) {
+            if (state is UserExists) {
+              return const HomeView();
+            } else {
+              return const SignUpView();
+            }
+          },
+        ),
+      ),
     );
   }
 }
