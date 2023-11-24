@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery_app/constants.dart';
 import 'package:grocery_app/views/cart_view.dart';
+import 'package:grocery_app/views/favourite_view.dart';
 import 'package:grocery_app/views/shop_view.dart';
 
 import '../cubits/category_cubit/category_cubit.dart';
@@ -29,6 +30,7 @@ class _HomeViewState extends State<HomeView> {
       child: const CategoryView(),
     ),
     const CartView(),
+    const FavouriteView(),
   ];
   int pageIndex = 0;
 

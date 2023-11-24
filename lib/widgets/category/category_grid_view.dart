@@ -17,7 +17,6 @@ class CategoriesGridView extends StatefulWidget {
 class _CategoriesGridViewState extends State<CategoriesGridView> {
   @override
   void initState() {
-    BlocProvider.of<CategoryCubit>(context).getCategories();
     super.initState();
   }
 

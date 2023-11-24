@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-
-import '../constants.dart';
+import 'package:grocery_app/constants.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
   final void Function()? onPressed;
 
   const CustomButton({
-    super.key,
+    Key? key,
     required this.text,
-    this.onPressed,
-  });
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,6 @@ class CustomButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(19),
         ),
-        foregroundColor: Colors.transparent,
         backgroundColor: kSecondaryColor,
         minimumSize: const Size(364, 67),
       ),

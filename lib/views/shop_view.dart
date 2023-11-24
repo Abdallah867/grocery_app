@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../widgets/product/exclusive_offer_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grocery_app/cubits/product_cubit/product_cubit.dart';
+import '../widgets/product/filtered_product_widget.dart';
 
 class ShopView extends StatelessWidget {
   const ShopView({
@@ -8,23 +10,35 @@ class ShopView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CustomScrollView(
+    return CustomScrollView(
       slivers: [
-        SliverToBoxAdapter(
+        const SliverToBoxAdapter(
           child: SizedBox(
             height: 100,
           ),
         ),
         SliverToBoxAdapter(
-          child: ExclusiveOfferWidget(),
+          child: BlocProvider(
+            create: (context) => ProductCubit(),
+            child: const FilteredProductWidget(
+              filter: "isExclusive",
+              name: "Exclusive Offer",
+            ),
+          ),
         ),
-        SliverToBoxAdapter(
+        const SliverToBoxAdapter(
           child: SizedBox(
             height: 40,
           ),
         ),
         SliverToBoxAdapter(
-          child: ExclusiveOfferWidget(),
+          child: BlocProvider(
+            create: (context) => ProductCubit(),
+            child: const FilteredProductWidget(
+              filter: "isBestSelling",
+              name: "Best Selling Offer",
+            ),
+          ),
         ),
       ],
     );

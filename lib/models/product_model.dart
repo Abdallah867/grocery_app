@@ -1,4 +1,5 @@
 class ProductModel {
+  final String productId;
   final String productName;
   final String productUnit;
   final String productDetail;
@@ -9,6 +10,7 @@ class ProductModel {
   final bool isBestSelling;
 
   ProductModel({
+    required this.productId,
     required this.productName,
     required this.productUnit,
     required this.productDetail,
@@ -19,8 +21,9 @@ class ProductModel {
     required this.isBestSelling,
   });
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) {
+  factory ProductModel.fromJson(Map<String, dynamic> json, String id) {
     return ProductModel(
+      productId: id,
       productName: json['productName'],
       productUnit: json['productUnit'],
       productDetail: json['productDetail'],
