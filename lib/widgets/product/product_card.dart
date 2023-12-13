@@ -42,8 +42,11 @@ class ProductCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                     vertical: 20.0,
                   ),
-                  child: Image.network(
-                    product.productImage,
+                  child: Hero(
+                    tag: 'productImage',
+                    child: Image.network(
+                      product.productImage,
+                    ),
                   ),
                 ),
               ),

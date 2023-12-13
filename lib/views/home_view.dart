@@ -36,6 +36,7 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    print("tefa7a");
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {

@@ -1,7 +1,6 @@
-part of 'product_cubit.dart';
+import '../../models/product_model.dart';
 
-@immutable
-sealed class ProductState {}
+class ProductState {}
 
 final class ProductLoading extends ProductState {}
 

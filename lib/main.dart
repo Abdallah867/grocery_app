@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery_app/cubits/check_user_if_exists/check_user_if_exists_cubit.dart';
+import 'package:grocery_app/helper/cache_helper.dart';
 import 'package:grocery_app/views/sign_up_view.dart';
 import 'cubits/check_user_if_exists/check_user_if_exists_state.dart';
+import 'helper/service_locator.dart';
+import 'simple_bloc_observer.dart';
 import 'views/home_view.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = SimpleBlocObserver();
+  setupAppwrite();
+  setupSharedPrefrences();
+  getIt.get<CacheHelper>().init();
   runApp(const MyApp());
 }
 
@@ -22,10 +30,6 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         fontFamily: "Gilroy",
-        // colorScheme: ColorScheme.fromSeed(
-        //   seedColor: Colors.deepPurple,
-        // ),
-
         useMaterial3: true,
         textTheme: const TextTheme(
           titleLarge: TextStyle(

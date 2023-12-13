@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery_app/cubits/product_cubit/product_cubit.dart';
 
 import '../../constants.dart';
+import '../../cubits/product_cubit/product_state.dart';
 import '../custom_text.dart';
 import 'product_list_view.dart';
 
@@ -22,6 +23,7 @@ class FilteredProductWidget extends StatefulWidget {
 class _FilteredProductWidgetState extends State<FilteredProductWidget> {
   @override
   void initState() {
+    print("baby");
     BlocProvider.of<ProductCubit>(context).getProducts(widget.filter);
     super.initState();
   }

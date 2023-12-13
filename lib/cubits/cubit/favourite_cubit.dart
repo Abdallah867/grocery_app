@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:appwrite/appwrite.dart';
@@ -13,37 +14,82 @@ class FavouriteCubit extends Cubit<FavouriteState> {
   FavouriteCubit() : super(FavouriteInitial());
   Databases databases = getIt.get<Databases>();
 
-  final String userId = getIt.get<CacheHelper>().getUserId(kuserId);
+  final String userId = getIt.get<CacheHelper>().getUserId();
   late List<String> favouriteItemsId;
 
   addItemtoFavouriteList(String userId, String itemId) async {
     try {
-      favouriteItemsId = await getFavouriteList() ?? [];
+      favouriteItemsId = await getFavouriteList();
       favouriteItemsId.add(itemId);
       await databases.updateDocument(
           databaseId: kDatabaseId,
-          collectionId: kCategoryCollectionId,
+          collectionId: kFavouriteCollectionId,
           documentId: userId,
           data: {kFavouritesId: favouriteItemsId});
+      await storeFavouriteInCache();
+      emit(FavouriteAddingSuccess());
     } on Exception catch (e) {
       // TODO
       log(e.toString());
     }
   }
 
-  Future<List<String>?> getFavouriteList() async {
+  deleteItemFromFavouriteList(String userId, String itemId) async {
     try {
-      final userFavourites = await databases.getDocument(
+      favouriteItemsId = await getFavouriteList();
+      favouriteItemsId.remove(itemId);
+      await databases.updateDocument(
+          databaseId: kDatabaseId,
+          collectionId: kFavouriteCollectionId,
+          documentId: userId,
+          data: {kFavouritesId: favouriteItemsId});
+      await storeFavouriteInCache();
+      emit(FavouriteDeletingSuccess());
+    } on Exception catch (e) {
+      // TODO
+      log(e.toString());
+    }
+  }
+
+  Future<List<String>> getFavouriteList() async {
+    try {
+      final document = await databases.getDocument(
         databaseId: kDatabaseId,
         collectionId: kFavouriteCollectionId,
         documentId: userId,
       );
 
-      return userFavourites.data[kFavouritesId];
+      List<String> userFavourite = [];
+
+      List<dynamic> documentList = document.data[kFavouritesId];
+      for (var document in documentList) {
+        userFavourite.add(document);
+      }
+      return Future.value(userFavourite);
     } on Exception catch (e) {
       log(e.toString());
-      return null;
+      emit(
+        FavouriteFailure(errMessage: e.toString()),
+      );
+      return Future.value([]);
     }
+  }
+
+  storeFavouriteInCache() async {
+    List<String> gottenFavouriteList = await getFavouriteList();
+
+    String favouriteListToString = jsonEncode(gottenFavouriteList);
+    getIt.get<CacheHelper>().storeString(kFavouriteList, favouriteListToString);
+    List favouriteList =
+        jsonDecode(getIt.get<CacheHelper>().getString(kFavouriteList));
+    print(favouriteList);
+  }
+
+  bool checkIfProductIsFavourite(String productId) {
+    List favouriteList =
+        jsonDecode(getIt.get<CacheHelper>().getString(kFavouriteList));
+    bool isProductContained = favouriteList.contains(productId);
+    return isProductContained;
   }
 
   getFavouriteProducts(List<String> favouriteProductsId) async {

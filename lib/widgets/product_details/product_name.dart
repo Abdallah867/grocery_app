@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grocery_app/cubits/cubit/favourite_cubit.dart';
 import 'package:grocery_app/models/product_model.dart';
 
 import '../../constants.dart';
+import 'like_butoon.dart';
 
 class ProductNameWidget extends StatelessWidget {
   final ProductModel product;
@@ -29,14 +32,19 @@ class ProductNameWidget extends StatelessWidget {
             Text(
               product.productUnit,
               style: const TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.w700, color: kGreyColor),
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: kGreyColor,
+              ),
             ),
           ],
         ),
-        const Icon(
-          Icons.favorite_border_outlined,
-          color: kGreyColor,
-        )
+        BlocProvider(
+          create: (context) => FavouriteCubit(),
+          child: LikeButton(
+            productId: product.productId,
+          ),
+        ),
       ],
     );
   }
