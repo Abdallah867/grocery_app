@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
+import '../../models/product_model.dart';
 
 class FavouriteItem extends StatelessWidget {
+  final ProductModel product;
   const FavouriteItem({
     super.key,
+    required this.product,
   });
 
   @override
@@ -12,11 +15,11 @@ class FavouriteItem extends StatelessWidget {
     return ListTile(
       contentPadding:
           const EdgeInsets.symmetric(horizontal: 25.0, vertical: 30),
-      leading: Image.asset("assets/images/banana.png"),
-      title: const Text('Bell Pepper Red'),
-      subtitle: const Text(
-        '1kg, Price',
-        style: TextStyle(
+      leading: Image.network(product.productImage),
+      title: Text(product.productName),
+      subtitle: Text(
+        product.productUnit,
+        style: const TextStyle(
           fontSize: 14,
           color: kGreyColor,
           fontWeight: FontWeight.w500,
@@ -25,9 +28,9 @@ class FavouriteItem extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text(
-            "4,99\$",
-            style: TextStyle(
+          Text(
+            "${product.productPrice}\$",
+            style: const TextStyle(
               fontSize: 16.0,
               fontWeight: FontWeight.w700,
             ),

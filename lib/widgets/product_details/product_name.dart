@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery_app/cubits/cubit/favourite_cubit.dart';
+import 'package:grocery_app/cubits/favourite_cubit/favourite_cubit.dart';
 import 'package:grocery_app/models/product_model.dart';
 
 import '../../constants.dart';

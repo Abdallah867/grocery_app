@@ -26,7 +26,7 @@ class CategoryCard extends StatelessWidget {
                   )),
         );
       },
-      child: Container(
+      child:  Container(
         width: 174.5,
         height: 189.11,
         decoration: BoxDecoration(

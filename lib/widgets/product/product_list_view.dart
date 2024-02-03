@@ -13,10 +13,17 @@ class ProductsListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 250,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) => ProductCard(product: products[index]),
-        itemCount: products.length,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 24.0),
+        child: ListView.separated(
+          separatorBuilder: (context, inte) => const SizedBox(
+            width: 24,
+          ),
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) =>
+              ProductCard(product: products[index]),
+          itemCount: products.length,
+        ),
       ),
     );
   }

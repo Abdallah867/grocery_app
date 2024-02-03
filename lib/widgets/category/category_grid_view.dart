@@ -32,7 +32,7 @@ class _CategoriesGridViewState extends State<CategoriesGridView> {
               crossAxisCount: 2,
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
-              mainAxisExtent: 189.11,
+              mainAxisExtent: 175,
             ),
             itemCount: categories.length,
             itemBuilder: (context, index) {

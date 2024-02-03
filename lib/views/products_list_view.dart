@@ -4,6 +4,9 @@ import 'package:grocery_app/cubits/category_products_cubit/category_products_cub
 import 'package:grocery_app/models/product_model.dart';
 import 'package:grocery_app/widgets/product/product_card.dart';
 
+import '../custom_app_bar.dart';
+import '../loading_widget.dart';
+
 class ProductsListView extends StatefulWidget {
   final String categoryName;
   const ProductsListView({super.key, required this.categoryName});
@@ -23,21 +26,31 @@ class _ProductsListViewState extends State<ProductsListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: customAppBar(widget.categoryName),
       body: BlocBuilder<CategoryProductsCubit, CategoryProductsState>(
         builder: (context, state) {
           if (state is CategoryProductsSuccess) {
             final List<ProductModel> categoryProduct = state.categoryProduct;
-            return GridView.builder(
-              itemCount: categoryProduct.length,
-              itemBuilder: (context, index) =>
-                  ProductCard(product: categoryProduct[index]),
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 120,
-                childAspectRatio: 7 / 9,
+
+            return Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 15.0),
+              child: GridView.builder(
+                itemCount: categoryProduct.length,
+                itemBuilder: (context, index) =>
+                    ProductCard(product: categoryProduct[index]),
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  mainAxisSpacing: 15,
+                  crossAxisSpacing: 15,
+                  childAspectRatio: 6 / 9,
+                ),
               ),
             );
+          } else if (state is CategoryProductsLoading) {
+            return const LoadingWidget();
           } else {
-            return Text("OOPS THERE WAS AN ERROR");
+            return const Text("OOPS THERE WAS AN ERROR");
           }
         },
       ),

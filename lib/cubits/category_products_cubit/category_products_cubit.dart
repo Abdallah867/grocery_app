@@ -16,6 +16,7 @@ class CategoryProductsCubit extends Cubit<CategoryProductsState> {
     final databases = getIt.get<Databases>();
 
     try {
+      emit(CategoryProductsLoading());
       final documents = await databases.listDocuments(
           databaseId: kDatabaseId,
           collectionId: kProductsCollectionId,

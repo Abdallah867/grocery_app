@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:grocery_app/constants.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grocery_app/cubits/cart_cubit/cart_cubit.dart';
 import 'package:grocery_app/models/product_model.dart';
 import 'package:grocery_app/views/product_details_view.dart';
 import 'package:grocery_app/widgets/custom_text.dart';
+
+import 'add_cart_button.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;
@@ -10,18 +13,22 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String imageTag = product.productId;
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ProductDetailsView(
-                    product: product,
-                  )),
+            builder: (context) => ProductDetailsView(
+              product: product,
+              imageTag: imageTag,
+            ),
+          ),
         );
       },
       child: Container(
-        margin: const EdgeInsets.only(left: 24),
+        // margin: const EdgeInsets.only(left: 24),
         height: 248.51,
         width: 173.32,
         decoration: BoxDecoration(
@@ -43,7 +50,7 @@ class ProductCard extends StatelessWidget {
                     vertical: 20.0,
                   ),
                   child: Hero(
-                    tag: 'productImage',
+                    tag: imageTag,
                     child: Image.network(
                       product.productImage,
                     ),
@@ -71,7 +78,10 @@ class ProductCard extends StatelessWidget {
                     theme: const TextStyle(
                         fontSize: 18.0, fontWeight: FontWeight.w700),
                   ),
-                  const AddCartButton(),
+                  BlocProvider(
+                    create: (context) => CartCubit(),
+                    child: AddCartButton(productId: product.productId),
+                  ),
                 ],
               ),
               const SizedBox(
@@ -80,27 +90,6 @@ class ProductCard extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class AddCartButton extends StatelessWidget {
-  const AddCartButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor: kSecondaryColor,
-      onPressed: () {},
-      heroTag: UniqueKey(),
-      elevation: 0,
-      child: const Icon(
-        Icons.add,
-        color: Colors.white,
-        size: 30,
       ),
     );
   }

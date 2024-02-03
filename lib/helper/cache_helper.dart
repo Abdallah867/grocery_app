@@ -22,4 +22,8 @@ class CacheHelper {
   void storeString(String key, String value) async {
     prefs.setString(key, value);
   }
+
+  bool isKeyExists(String key) {
+    return prefs.containsKey(key);
+  }
 }

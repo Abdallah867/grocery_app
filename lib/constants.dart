@@ -12,3 +12,5 @@ const kCategoryCollectionId = '653299cd6b33fca84094';
 const kProductsCollectionId = '6522f8ee91a25078b124';
 const kFavouriteCollectionId = '65627b3fd119af3d4179';
 const kFavouriteList = 'favouriteList';
+const kProductImageTag = 'Product Image';
+const kCartList = 'CartList';

@@ -13,7 +13,9 @@ void main() async {
   Bloc.observer = SimpleBlocObserver();
   setupAppwrite();
   setupSharedPrefrences();
+
   getIt.get<CacheHelper>().init();
+
   runApp(const MyApp());
 }
 

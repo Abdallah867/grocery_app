@@ -19,6 +19,8 @@ class FavouriteCubit extends Cubit<FavouriteState> {
 
   addItemtoFavouriteList(String userId, String itemId) async {
     try {
+      emit(FavouriteLoading());
+
       favouriteItemsId = await getFavouriteList();
       favouriteItemsId.add(itemId);
       await databases.updateDocument(
@@ -36,6 +38,7 @@ class FavouriteCubit extends Cubit<FavouriteState> {
 
   deleteItemFromFavouriteList(String userId, String itemId) async {
     try {
+      emit(FavouriteLoading());
       favouriteItemsId = await getFavouriteList();
       favouriteItemsId.remove(itemId);
       await databases.updateDocument(
@@ -53,6 +56,7 @@ class FavouriteCubit extends Cubit<FavouriteState> {
 
   Future<List<String>> getFavouriteList() async {
     try {
+      emit(FavouriteLoading());
       final document = await databases.getDocument(
         databaseId: kDatabaseId,
         collectionId: kFavouriteCollectionId,
@@ -76,13 +80,12 @@ class FavouriteCubit extends Cubit<FavouriteState> {
   }
 
   storeFavouriteInCache() async {
+    emit(FavouriteLoading());
     List<String> gottenFavouriteList = await getFavouriteList();
 
     String favouriteListToString = jsonEncode(gottenFavouriteList);
     getIt.get<CacheHelper>().storeString(kFavouriteList, favouriteListToString);
-    List favouriteList =
-        jsonDecode(getIt.get<CacheHelper>().getString(kFavouriteList));
-    print(favouriteList);
+    emit(FavouriteStored());
   }
 
   bool checkIfProductIsFavourite(String productId) {
@@ -92,16 +95,22 @@ class FavouriteCubit extends Cubit<FavouriteState> {
     return isProductContained;
   }
 
-  getFavouriteProducts(List<String> favouriteProductsId) async {
-    final documents = await databases.listDocuments(
-        databaseId: kDatabaseId,
-        collectionId: kProductsCollectionId,
-        queries: [Query.equal("\$id", favouriteProductsId)]);
+  getFavouriteProducts(List productsIds) async {
+    try {
+      emit(FavouriteLoading());
+      final documents = await databases.listDocuments(
+          databaseId: kDatabaseId,
+          collectionId: kProductsCollectionId,
+          queries: [Query.equal("\$id", productsIds)]);
 
-    final List<ProductModel> products = documents.documents
-        .map((document) => ProductModel.fromJson(document.data, document.$id))
-        .toList();
+      final List<ProductModel> products = documents.documents
+          .map((document) => ProductModel.fromJson(document.data, document.$id))
+          .toList();
 
-    return products;
+      emit(FavouriteRetrieved(products: products));
+    } on Exception catch (e) {
+      log(e.toString());
+      return [];
+    }
   }
 }
