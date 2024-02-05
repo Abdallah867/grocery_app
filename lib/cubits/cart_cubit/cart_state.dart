@@ -13,6 +13,12 @@ final class CartStored extends CartState {}
 
 final class CartAddedBefore extends CartState {}
 
+final class IsProductExists extends CartState {
+  final bool isExists;
+
+  IsProductExists({required this.isExists});
+}
+
 final class CartFetched extends CartState {
   final List<CartModel> products;
 

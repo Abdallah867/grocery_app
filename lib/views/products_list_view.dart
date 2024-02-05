@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery_app/cubits/category_products_cubit/category_products_cubit.dart';
 import 'package:grocery_app/models/product_model.dart';
 import 'package:grocery_app/widgets/product/product_card.dart';
@@ -34,15 +35,15 @@ class _ProductsListViewState extends State<ProductsListView> {
 
             return Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 15.0),
+                  EdgeInsets.symmetric(horizontal: 25.0.w, vertical: 15.0.h),
               child: GridView.builder(
                 itemCount: categoryProduct.length,
                 itemBuilder: (context, index) =>
                     ProductCard(product: categoryProduct[index]),
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200,
-                  mainAxisSpacing: 15,
-                  crossAxisSpacing: 15,
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 190.w,
+                  mainAxisSpacing: 10.h,
+                  crossAxisSpacing: 20.w,
                   childAspectRatio: 6 / 9,
                 ),
               ),

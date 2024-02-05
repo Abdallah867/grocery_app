@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery_app/custom_app_bar.dart';
 import '../widgets/category/category_grid_view.dart';
 
@@ -9,9 +10,9 @@ class CategoryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar("Find Products"),
-      body: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-        child: CategoriesGridView(),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 12.0.h),
+        child: const CategoriesGridView(),
       ),
     );
   }

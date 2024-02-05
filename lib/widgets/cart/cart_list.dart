@@ -14,7 +14,7 @@ class CartList extends StatelessWidget {
       builder: (context, state) {
         if (state is CartFetched) {
           return CartListView(products: state.products);
-        } else if (state is CartLoading) {
+        } else if (state is CartInitial) {
           return const LoadingWidget();
         } else if (state is CartDeleting) {
           return CartListView(products: state.products);

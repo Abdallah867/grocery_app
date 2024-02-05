@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:grocery_app/models/product_model.dart';
 
 class CartModel {

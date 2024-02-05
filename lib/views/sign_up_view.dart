@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery_app/widgets/auth/have_an_account_widget.dart';
 import '../cubits/auth_cubit/auth_cubit.dart';
 import '../widgets/custom_text.dart';
@@ -17,7 +18,7 @@ class SignUpView extends StatelessWidget {
       create: (context) => AuthCubit(),
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          padding: EdgeInsets.symmetric(horizontal: 25.0.w),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,14 +28,14 @@ class SignUpView extends StatelessWidget {
                   text: "Sign up",
                   theme: Theme.of(context).textTheme.titleLarge,
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10.h),
                 CustomText(
                   text: "Enter your credentials to continue",
                   theme: Theme.of(context).textTheme.titleSmall,
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30.h),
                 const SignUpForm(),
-                const SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 const HaveAnAccountWidget(),
               ],
             ),

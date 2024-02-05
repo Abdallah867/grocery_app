@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery_app/views/home_view.dart';
 
 import '../../constants.dart';
@@ -22,7 +23,7 @@ class SignUpForm extends StatelessWidget {
         if (state is SignUpSuccess) {
           showSnackBar(context, "signed up successfully");
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => HomeView()),
+            MaterialPageRoute(builder: (context) => const HomeView()),
           );
         }
         if (state is SignUpFailure) {
@@ -42,8 +43,8 @@ class SignUpForm extends StatelessWidget {
                   },
                   text: 'Username',
                 ),
-                const SizedBox(
-                  height: 25,
+                SizedBox(
+                  height: 25.h,
                 ),
                 CustomTextFormField(
                   onChanged: (email) {
@@ -51,8 +52,8 @@ class SignUpForm extends StatelessWidget {
                   },
                   text: 'Email',
                 ),
-                const SizedBox(
-                  height: 25,
+                SizedBox(
+                  height: 25.h,
                 ),
                 CustomTextFormField(
                   onChanged: (password) {
@@ -60,13 +61,13 @@ class SignUpForm extends StatelessWidget {
                   },
                   text: 'Password',
                 ),
-                const SizedBox(
-                  height: 30,
+                SizedBox(
+                  height: 30.h,
                 ),
                 state is SignUpLoading
-                    ? const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 16.0),
-                        child: CircularProgressIndicator(
+                    ? Padding(
+                        padding: EdgeInsets.symmetric(vertical: 16.0.h),
+                        child: const CircularProgressIndicator(
                           color: kSecondaryColor,
                         ),
                       )

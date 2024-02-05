@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:grocery_app/constants.dart';
 import 'package:grocery_app/cubits/cart_cubit/cart_cubit.dart';
 import 'package:grocery_app/models/product_model.dart';
 import 'package:grocery_app/views/product_details_view.dart';
@@ -13,8 +15,6 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String imageTag = product.productId;
-
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -22,15 +22,14 @@ class ProductCard extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => ProductDetailsView(
               product: product,
-              imageTag: imageTag,
             ),
           ),
         );
       },
       child: Container(
         // margin: const EdgeInsets.only(left: 24),
-        height: 248.51,
-        width: 173.32,
+        height: 248.51.h,
+        width: 173.32.w,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(
             Radius.circular(18),
@@ -40,34 +39,36 @@ class ProductCard extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          padding: EdgeInsets.symmetric(horizontal: 12.0.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 20.0,
+                  padding: EdgeInsets.symmetric(
+                    vertical: 20.0.h,
                   ),
-                  child: Hero(
-                    tag: imageTag,
-                    child: Image.network(
-                      product.productImage,
+                  child: SizedBox(
+                    height: 70.0.h,
+                    child: Hero(
+                      tag: kProductImageTag,
+                      child: Image.network(
+                        product.productImage,
+                      ),
                     ),
                   ),
                 ),
               ),
               CustomText(
                 text: product.productName,
-                theme:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
+                theme: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w900),
               ),
               CustomText(
                 text: product.productUnit,
-                theme: const TextStyle(
-                    fontSize: 14,
+                theme: TextStyle(
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xFF7C7C7C)),
+                    color: const Color(0xFF7C7C7C)),
               ),
               const Spacer(),
               Row(
@@ -75,8 +76,8 @@ class ProductCard extends StatelessWidget {
                 children: [
                   CustomText(
                     text: "${product.productPrice}\$",
-                    theme: const TextStyle(
-                        fontSize: 18.0, fontWeight: FontWeight.w700),
+                    theme: TextStyle(
+                        fontSize: 18.0.sp, fontWeight: FontWeight.w700),
                   ),
                   BlocProvider(
                     create: (context) => CartCubit(),

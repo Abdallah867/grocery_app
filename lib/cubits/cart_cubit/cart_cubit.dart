@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:appwrite/appwrite.dart';
+import 'package:appwrite/models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:grocery_app/constants.dart';
 import 'package:grocery_app/helper/cache_helper.dart';
@@ -19,13 +20,19 @@ class CartCubit extends Cubit<CartState> {
   final user = getIt.get<CacheHelper>().getUserId();
   int counter = 1;
 
+  void updateCounter(int newVal) {
+    counter = newVal;
+  }
+
+  Future<void> findIfProductExists(productId) async {
+    List existingCart = await fetchCart();
+    List cartProductIds = existingCart.map((e) => e['productId']).toList();
+    print('${cartProductIds}');
+    emit(IsProductExists(isExists: cartProductIds.contains(productId)));
+  }
+
   Future<List> fetchCart() async {
     try {
-      emit(CartLoading());
-
-      final databases = getIt.get<Databases>();
-      final user = getIt.get<CacheHelper>().getUserId();
-
       // Fetch existing cart data
       var document = await databases.getDocument(
         databaseId: kDatabaseId,
@@ -37,6 +44,24 @@ class CartCubit extends Cubit<CartState> {
     } catch (e) {
       log(e.toString());
       throw e;
+    }
+  }
+
+  updateCart(String productId) async {
+    try {
+      List existingCart = await fetchCart();
+      List newCart = existingCart.map((e) {
+        if (e['productId'] == productId) {
+          e['numberOfProducts'] = counter;
+        }
+      }).toList();
+      print('${newCart}');
+      await updateCartDocument(existingCart);
+      List<CartModel> products = await getProducts();
+      emit(CartFetched(products: products));
+    } catch (e) {
+      emit(CartFailed(e: e.toString()));
+      log(e.toString());
     }
   }
 
@@ -79,18 +104,12 @@ class CartCubit extends Cubit<CartState> {
       if (!cartProductIds.contains(productId)) {
         existingCart.add({
           'productId': productId,
-          'numberOfProducts': 2,
+          'numberOfProducts': counter,
         });
 
         // Update the document with the modified array
-        await databases.updateDocument(
-          databaseId: kDatabaseId,
-          collectionId: kFavouriteCollectionId,
-          documentId: user,
-          data: {
-            'cart': existingCart,
-          },
-        );
+        await updateCartDocument(existingCart);
+
         emit(CartAdding());
       } else {
         emit(CartAddedBefore());
@@ -112,19 +131,23 @@ class CartCubit extends Cubit<CartState> {
       print(existingCart.toString());
 
       // Update the document with the modified array
-      await databases.updateDocument(
-        databaseId: kDatabaseId,
-        collectionId: kFavouriteCollectionId,
-        documentId: user,
-        data: {
-          'cart': existingCart,
-        },
-      );
+      await updateCartDocument(existingCart);
       List<CartModel> newCart = await getProducts();
       emit(CartDeleting(products: newCart));
     } catch (e) {
       emit(CartFailed(e: e.toString()));
       log(e.toString());
     }
+  }
+
+  Future<Document> updateCartDocument(List<dynamic> existingCart) async {
+    return await databases.updateDocument(
+      databaseId: kDatabaseId,
+      collectionId: kFavouriteCollectionId,
+      documentId: user,
+      data: {
+        'cart': existingCart,
+      },
+    );
   }
 }

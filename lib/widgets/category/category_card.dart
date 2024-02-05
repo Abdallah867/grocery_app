@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery_app/models/category_model.dart';
 import 'package:grocery_app/views/products_list_view.dart';
 import 'package:grocery_app/widgets/custom_text.dart';
@@ -26,9 +27,9 @@ class CategoryCard extends StatelessWidget {
                   )),
         );
       },
-      child:  Container(
-        width: 174.5,
-        height: 189.11,
+      child: Container(
+        width: 174.5.w,
+        height: 189.11.h,
         decoration: BoxDecoration(
           border: Border.all(
             width: 1.5,
@@ -43,8 +44,8 @@ class CategoryCard extends StatelessWidget {
           children: [
             Image.network(
               category.imageUrl,
-              height: 74.9,
-              width: 111.38,
+              height: 74.9.h,
+              width: 111.38.w,
               fit: BoxFit.fill,
             ),
             const SizedBox(

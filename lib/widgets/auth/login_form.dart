@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../constants.dart';
 import '../../cubits/auth_cubit/auth_cubit.dart';
 import '../../helper/show_snack_bar.dart';
@@ -21,7 +22,7 @@ class LoginForm extends StatelessWidget {
         if (state is SignInSuccess) {
           showSnackBar(context, "Logged in successfully");
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => HomeView()),
+            MaterialPageRoute(builder: (context) => const HomeView()),
           );
         }
         if (state is SignInFailure) {
@@ -35,8 +36,8 @@ class LoginForm extends StatelessWidget {
             key: authCubit.loginKey,
             child: Column(
               children: [
-                const SizedBox(
-                  height: 30,
+                SizedBox(
+                  height: 30.h,
                 ),
                 CustomTextFormField(
                   text: 'Email',
@@ -44,8 +45,8 @@ class LoginForm extends StatelessWidget {
                     authCubit.email = email;
                   },
                 ),
-                const SizedBox(
-                  height: 25,
+                SizedBox(
+                  height: 25.h,
                 ),
                 CustomTextFormField(
                   text: 'Password',
@@ -53,8 +54,8 @@ class LoginForm extends StatelessWidget {
                     authCubit.password = password;
                   },
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: 10.h,
                 ),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -62,13 +63,13 @@ class LoginForm extends StatelessWidget {
                     Text("Forgot Password ?"),
                   ],
                 ),
-                const SizedBox(
-                  height: 30,
+                SizedBox(
+                  height: 30.h,
                 ),
                 state is SignInLoading
-                    ? const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 16.0),
-                        child: CircularProgressIndicator(
+                    ? Padding(
+                        padding: EdgeInsets.symmetric(vertical: 16.0.h),
+                        child: const CircularProgressIndicator(
                           color: kSecondaryColor,
                         ),
                       )
@@ -81,8 +82,8 @@ class LoginForm extends StatelessWidget {
                         text: "Login",
                         // onPressed: ,
                       ),
-                const SizedBox(
-                  height: 5,
+                SizedBox(
+                  height: 5.h,
                 ),
               ],
             ),

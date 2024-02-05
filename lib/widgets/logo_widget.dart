@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class LogoWidget extends StatelessWidget {
@@ -10,11 +11,11 @@ class LogoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 80),
+        SizedBox(height: 80.h),
         Center(
           child: SvgPicture.asset("assets/images/logo.svg"),
         ),
-        const SizedBox(height: 60),
+        SizedBox(height: 60.h),
       ],
     );
   }

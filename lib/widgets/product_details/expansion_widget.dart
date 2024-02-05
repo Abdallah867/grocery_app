@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../constants.dart';
 
@@ -38,8 +39,8 @@ class ExpansionWidget extends StatelessWidget {
       ),
       children: [
         Text(productDetail,
-            style: const TextStyle(
-              fontSize: 13,
+            style: TextStyle(
+              fontSize: 13.sp,
               fontWeight: FontWeight.w500,
               color: kGreyColor,
             )),

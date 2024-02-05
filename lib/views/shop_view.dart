@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery_app/cubits/product_cubit/product_cubit.dart';
 import '../widgets/product/filtered_product_widget.dart';
 
@@ -12,9 +13,9 @@ class ShopView extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        const SliverToBoxAdapter(
+        SliverToBoxAdapter(
           child: SizedBox(
-            height: 100,
+            height: 100.h,
           ),
         ),
         SliverToBoxAdapter(
@@ -26,9 +27,9 @@ class ShopView extends StatelessWidget {
             ),
           ),
         ),
-        const SliverToBoxAdapter(
+        SliverToBoxAdapter(
           child: SizedBox(
-            height: 40,
+            height: 40.h,
           ),
         ),
         SliverToBoxAdapter(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 AppBar customAppBar(String name) {
   return AppBar(
@@ -6,7 +7,7 @@ AppBar customAppBar(String name) {
     centerTitle: true,
     title: Text(
       name,
-      style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.w900),
+      style: TextStyle(fontSize: 20.0.sp, fontWeight: FontWeight.w900),
     ),
   );
 }

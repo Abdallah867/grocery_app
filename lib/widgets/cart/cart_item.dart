@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery_app/cubits/cart_cubit/cart_cubit.dart';
 import 'package:grocery_app/models/cart_model.dart';
 
@@ -16,7 +17,7 @@ class CartItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15),
+      padding: EdgeInsets.symmetric(horizontal: 25.0.w, vertical: 15.h),
       child: Row(
         children: [
           Expanded(
@@ -28,17 +29,19 @@ class CartItem extends StatelessWidget {
                 children: [
                   Text(
                     cartProduct.product.productUnit,
-                    style: const TextStyle(
-                      fontSize: 14,
+                    style: TextStyle(
+                      fontSize: 14.sp,
                       color: kGreyColor,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  const SizedBox(
-                    height: 12.0,
+                  SizedBox(
+                    height: 12.0.h,
                   ),
                   CounterWidget(
                     counter: cartProduct.numberOfProducts,
+                    productId: cartProduct.productId,
+                    isInCartScreen: true,
                   ),
                 ],
               ),

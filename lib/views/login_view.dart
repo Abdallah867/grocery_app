@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery_app/widgets/auth/dont_have_an_account.dart';
 import '../cubits/auth_cubit/auth_cubit.dart';
 import '../widgets/custom_text.dart';
@@ -15,25 +16,25 @@ class LoginView extends StatelessWidget {
       create: (context) => AuthCubit(),
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          padding: EdgeInsets.symmetric(horizontal: 25.0.w),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 80),
+                SizedBox(height: 80.h),
                 const LogoWidget(),
-                const SizedBox(height: 60),
+                SizedBox(height: 60.h),
                 CustomText(
                   text: "Login",
                   theme: Theme.of(context).textTheme.titleLarge,
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10.h),
                 CustomText(
                   text: "Enter your emails and password",
                   theme: Theme.of(context).textTheme.titleSmall,
                 ),
                 const LoginForm(),
-                const SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 const DontHaveAnAccountWidget()
               ],
             ),

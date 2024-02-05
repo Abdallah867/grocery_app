@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery_app/cubits/favourite_cubit/favourite_cubit.dart';
 
 import '../custom_app_bar.dart';
@@ -14,11 +15,11 @@ class FavouriteView extends StatelessWidget {
     return Scaffold(
       appBar: customAppBar("My Favorites"),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(
-          left: 24.0,
-          right: 24.0,
-          bottom: 24,
-          top: 8,
+        padding: EdgeInsets.only(
+          left: 24.0.w,
+          right: 24.0.w,
+          bottom: 24.h,
+          top: 8.h,
         ),
         child: CustomButton(text: "Add All To Cart", onPressed: () {}),
       ),

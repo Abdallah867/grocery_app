@@ -18,6 +18,5 @@ class CartListView extends StatelessWidget {
       ),
       itemCount: products.length,
     );
-    ;
   }
 }
