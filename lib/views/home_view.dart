@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery_app/constants.dart';
+import 'package:grocery_app/cubits/cart_cubit/cart_cubit.dart';
 import 'package:grocery_app/views/cart_view.dart';
 import 'package:grocery_app/views/favourite_view.dart';
+import 'package:grocery_app/views/profile_view.dart';
 import 'package:grocery_app/views/shop_view.dart';
 
 import '../cubits/category_cubit/category_cubit.dart';
@@ -31,12 +33,12 @@ class _HomeViewState extends State<HomeView> {
     ),
     const CartView(),
     const FavouriteView(),
+    const ProfileView(),
   ];
   int pageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    print("tefa7a");
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {

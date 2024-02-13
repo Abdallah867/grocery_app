@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery_app/cubits/check_user_if_exists/check_user_if_exists_cubit.dart';
 import 'package:grocery_app/helper/cache_helper.dart';
+import 'package:grocery_app/views/home_view.dart';
 import 'package:grocery_app/views/sign_up_view.dart';
 import 'cubits/check_user_if_exists/check_user_if_exists_state.dart';
 import 'helper/service_locator.dart';
 import 'simple_bloc_observer.dart';
-import 'views/nav_bar_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -64,7 +64,7 @@ class GroceryApp extends StatelessWidget {
                   BlocBuilder<CheckUserIfExistsCubit, CheckUserIfExistsState>(
                 builder: (context, state) {
                   if (state is UserExists) {
-                    return const NavBarView();
+                    return const HomeView();
                   } else {
                     return const SignUpView();
                   }

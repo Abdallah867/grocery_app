@@ -35,3 +35,9 @@ final class CartFailed extends CartState {
   final String e;
   CartFailed({required this.e});
 }
+
+final class CartProductFetched extends CartState {
+  final ProductModel cartProduct;
+
+  CartProductFetched({required this.cartProduct});
+}

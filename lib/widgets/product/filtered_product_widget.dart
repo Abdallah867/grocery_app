@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery_app/cubits/product_cubit/product_cubit.dart';
 
 import '../../constants.dart';
@@ -23,7 +24,6 @@ class FilteredProductWidget extends StatefulWidget {
 class _FilteredProductWidgetState extends State<FilteredProductWidget> {
   @override
   void initState() {
-    print("baby");
     BlocProvider.of<ProductCubit>(context).getProducts(widget.filter);
     super.initState();
   }
@@ -37,7 +37,7 @@ class _FilteredProductWidgetState extends State<FilteredProductWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                padding: EdgeInsets.symmetric(horizontal: 24.0.w),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -48,11 +48,11 @@ class _FilteredProductWidgetState extends State<FilteredProductWidget> {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const CustomText(
+                    CustomText(
                       text: "See all",
                       theme: TextStyle(
                         color: kSecondaryColor,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w700,
                       ),
                     ),

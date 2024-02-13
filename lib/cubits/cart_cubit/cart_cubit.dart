@@ -24,12 +24,57 @@ class CartCubit extends Cubit<CartState> {
     counter = newVal;
   }
 
-  Future<void> findIfProductExists(productId) async {
+  Future<void> findIfProductExists(String productId) async {
     List existingCart = await fetchCart();
     List cartProductIds = existingCart.map((e) => e['productId']).toList();
-    print('${cartProductIds}');
     emit(IsProductExists(isExists: cartProductIds.contains(productId)));
   }
+
+  getProduct(String productId) async {
+    List existingCart = await fetchCart();
+    var cartItem = existingCart.firstWhere(
+      (e) => e['productId'] == productId,
+      orElse: () => null,
+    );
+    print('${cartItem}');
+    if (cartItem != null) {
+      final document = await databases.getDocument(
+        databaseId: kDatabaseId,
+        collectionId: kProductsCollectionId,
+        documentId: cartItem['productId'],
+      );
+      CartModel cartProduct = CartModel.fromJson(
+          cartItem, ProductModel.fromJson(document.data, document.$id));
+      emit(CartProductFetched(cartProduct: cartProduct));
+    } else {
+      final document = await databases.getDocument(
+        databaseId: kDatabaseId,
+        collectionId: kProductsCollectionId,
+        documentId: cartItem['productId'],
+      );
+      ProductModel product = ProductModel.fromJson(document.data, document.$id);
+      emit(CartProductFetched(cartProduct: product));
+    }
+  }
+
+  // getNumberOfProducts(String productId) async {
+  //   List existingCart = await getProduct();
+  //   CartModel product =
+  //       existingCart.firstWhere((e) => e.productId == productId);
+  //   if (product != null) {
+  //     emit(NumberOfProductsInCart(number: product['numberOfProducts']));
+  //   } else {
+  //     emit(NumberOfProductsInCart(number: 1));
+  //   }
+  // }
+
+  // getProduct(String productId) async {
+  // var document = await databases.listDocuments(
+  //       databaseId: kDatabaseId,
+  //       collectionId: '65613479a91ffc689905',
+  //       queries:
+  //     );
+  // }
 
   Future<List> fetchCart() async {
     try {
@@ -43,7 +88,7 @@ class CartCubit extends Cubit<CartState> {
       return existingCart;
     } catch (e) {
       log(e.toString());
-      throw e;
+      rethrow;
     }
   }
 
@@ -54,9 +99,9 @@ class CartCubit extends Cubit<CartState> {
         if (e['productId'] == productId) {
           e['numberOfProducts'] = counter;
         }
+        return e;
       }).toList();
-      print('${newCart}');
-      await updateCartDocument(existingCart);
+      await updateCartDocument(newCart);
       List<CartModel> products = await getProducts();
       emit(CartFetched(products: products));
     } catch (e) {
@@ -79,9 +124,10 @@ class CartCubit extends Cubit<CartState> {
           cartItem,
           ProductModel.fromJson(document.data, document.$id),
         );
-        print('$product');
         products.add(product);
       }
+      print('${products.length}');
+
       emit(CartFetched(products: products));
       return products;
     } on Exception catch (e) {
@@ -92,9 +138,6 @@ class CartCubit extends Cubit<CartState> {
 
   Future<void> addToCart(String productId) async {
     try {
-      final databases = getIt.get<Databases>();
-      final user = getIt.get<CacheHelper>().getUserId();
-
       // Fetch existing cart
       List<dynamic> existingCart = await fetchCart();
 
@@ -110,7 +153,9 @@ class CartCubit extends Cubit<CartState> {
         // Update the document with the modified array
         await updateCartDocument(existingCart);
 
-        emit(CartAdding());
+        // emit(CartAdding());
+        await getProducts();
+        // emit(CartFetched(products: products));
       } else {
         emit(CartAddedBefore());
       }
@@ -128,7 +173,6 @@ class CartCubit extends Cubit<CartState> {
       // Remove the item with the specified productId from the array
 
       existingCart.removeWhere((item) => item['productId'] == productId);
-      print(existingCart.toString());
 
       // Update the document with the modified array
       await updateCartDocument(existingCart);

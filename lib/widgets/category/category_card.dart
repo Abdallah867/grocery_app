@@ -44,23 +44,23 @@ class CategoryCard extends StatelessWidget {
           children: [
             Image.network(
               category.imageUrl,
-              height: 74.9.h,
+              height: 100.9.h,
               width: 111.38.w,
               fit: BoxFit.fill,
             ),
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: 20.h,
             ),
             Container(
               alignment: Alignment.center,
-              constraints: const BoxConstraints(maxWidth: 101),
+              constraints: BoxConstraints(maxWidth: 101.w),
               child: CustomText(
                   text: category.categoryName,
                   theme: styleText(
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontweight: FontWeight.w900,
                   )),
-            )
+            ),
           ],
         ),
       ),

@@ -45,7 +45,9 @@ class CartItem extends StatelessWidget {
                   ),
                 ],
               ),
-              leading: Image.network(cartProduct.product.productImage),
+              leading: SizedBox(
+                  width: 70.w,
+                  child: Image.network(cartProduct.product.productImage)),
             ),
           ),
           Column(

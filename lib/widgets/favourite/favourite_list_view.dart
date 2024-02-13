@@ -25,7 +25,6 @@ class _FavouriteListViewState extends State<FavouriteListView> {
     if (getIt.get<CacheHelper>().isKeyExists(kFavouriteList)) {
       List productsIds =
           jsonDecode(getIt.get<CacheHelper>().getString(kFavouriteList));
-      print(productsIds);
       BlocProvider.of<FavouriteCubit>(context)
           .getFavouriteProducts(productsIds);
     } else {
@@ -63,8 +62,9 @@ class _FavouriteListViewState extends State<FavouriteListView> {
             ),
             itemCount: favouriteProducts.length,
           );
-        } else
-          return Text("OOPS THERE WAS AN ERROR");
+        } else {
+          return const Text("OOPS THERE WAS AN ERROR");
+        }
       },
     );
   }

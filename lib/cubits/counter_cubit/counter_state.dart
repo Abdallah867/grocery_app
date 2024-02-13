@@ -1,6 +1,6 @@
 part of 'counter_cubit.dart';
 
- class CounterState {}
+class CounterState {}
 
 final class CounterInitial extends CounterState {}
 
@@ -11,4 +11,3 @@ final class CounterUpdate extends CounterState {
 
   CounterUpdate({required this.count});
 }
-

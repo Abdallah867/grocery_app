@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../constants.dart';
 import '../../models/product_model.dart';
+import '../../views/product_details_view.dart';
 
 class FavouriteItem extends StatelessWidget {
   final ProductModel product;
@@ -13,8 +15,7 @@ class FavouriteItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding:
-          const EdgeInsets.symmetric(horizontal: 25.0, vertical: 30),
+      contentPadding: EdgeInsets.symmetric(horizontal: 25.0.w, vertical: 30.h),
       leading: Image.network(product.productImage),
       title: Text(product.productName),
       subtitle: Text(
@@ -36,7 +37,16 @@ class FavouriteItem extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProductDetailsView(
+                    product: product,
+                  ),
+                ),
+              );
+            },
             icon: const Icon(
               Icons.arrow_forward_ios_sharp,
               size: 18,

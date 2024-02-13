@@ -6,7 +6,10 @@ class CounterCubit extends Cubit<CounterState> {
   CounterCubit() : super(CounterInitial());
 
   incrementCounter(int counter) {
-    counter = counter + 1;
+    if (counter < 10) {
+      counter = counter + 1;
+    }
+
     emit(CounterUpdate(count: counter));
   }
 
@@ -14,6 +17,7 @@ class CounterCubit extends Cubit<CounterState> {
     if (counter > 1) {
       counter = counter - 1;
     }
+
     emit(CounterUpdate(count: counter));
   }
 }
