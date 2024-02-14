@@ -19,6 +19,7 @@ class CartCubit extends Cubit<CartState> {
   final databases = getIt.get<Databases>();
   final user = getIt.get<CacheHelper>().getUserId();
   int counter = 1;
+  late bool isExists = false;
 
   void updateCounter(int newVal) {
     counter = newVal;
@@ -38,6 +39,7 @@ class CartCubit extends Cubit<CartState> {
     );
     print('${cartItem}');
     if (cartItem != null) {
+      isExists = true;
       final document = await databases.getDocument(
         databaseId: kDatabaseId,
         collectionId: kProductsCollectionId,
@@ -45,13 +47,16 @@ class CartCubit extends Cubit<CartState> {
       );
       CartModel cartProduct = CartModel.fromJson(
           cartItem, ProductModel.fromJson(document.data, document.$id));
+
       emit(CartProductFetched(cartProduct: cartProduct));
     } else {
+      isExists = false;
       final document = await databases.getDocument(
         databaseId: kDatabaseId,
         collectionId: kProductsCollectionId,
         documentId: cartItem['productId'],
       );
+
       ProductModel product = ProductModel.fromJson(document.data, document.$id);
       emit(CartProductFetched(cartProduct: product));
     }
@@ -152,10 +157,11 @@ class CartCubit extends Cubit<CartState> {
 
         // Update the document with the modified array
         await updateCartDocument(existingCart);
+        isExists = true;
 
-        // emit(CartAdding());
-        await getProducts();
-        // emit(CartFetched(products: products));
+        emit(CartAdding());
+        //  products = await getProducts();
+        //   emit(CartFetched(products: products));
       } else {
         emit(CartAddedBefore());
       }
